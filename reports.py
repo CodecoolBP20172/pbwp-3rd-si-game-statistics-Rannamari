@@ -1,6 +1,6 @@
 import csv
 
-
+# reading the given txt file
 def reading_text(file_name):
     games_list = list(csv.reader(open(file_name, 'r'), delimiter="\t"))
     return games_list
