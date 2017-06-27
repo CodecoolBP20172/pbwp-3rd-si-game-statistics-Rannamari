@@ -1,4 +1,4 @@
-from reports import
+from reports import *
 # importing functions from report.py
 
 print(reading_text("game_stat.txt"))

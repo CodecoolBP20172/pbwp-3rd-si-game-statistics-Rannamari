@@ -62,7 +62,7 @@ def get_genres(file_name):
             continue
         else:
             genres.append(lists[3])
-    return sorted(genres)
+    return sorted(genres, key=str.lower)
 
 
 def when_was_top_sold_fps(file_name):
