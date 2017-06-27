@@ -11,27 +11,24 @@ def get_most_played(file_name):
     return sorted_list[0][0]
 
 
-def sum_sold(file_name):
-    sold_games = []
+def iterating(file_name, math, number):
+    new_list = []
     for lists in reading_text(file_name):
-        sold_games.append(float(lists[1]))
-    return (sum(sold_games))
+        new_list.append(math(lists[number]))
+    return new_list
 
 
 def get_selling_avg(file_name):
-    sold_games = []
-    for lists in reading_text(file_name):
-        sold_games.append(float(lists[1]))
-    return sum(sold_games)/float(len(sold_games))
+    return sum(iterating(file_name, float, 1))/float(len(iterating(file_name, float, 1)))
+
+
+def sum_sold(file_name):
+    return sum(iterating(file_name, float, 1))
 
 
 def count_longest_title(file_name):
-    title_list = []
-    for lists in reading_text(file_name):
-        title_list.append(len(lists[0]))
-    sorted_title_list = sorted(title_list, reverse=True)
-    print(sorted_title_list)
-    return sorted_title_list[0]
+    return sorted(iterating(file_name, len, 0), reverse=True)[0]
+
 
 
 def get_date_avg(file_name):
@@ -40,8 +37,14 @@ def get_date_avg(file_name):
         avg_years.append(int(lists[2]))
     return round(sum(avg_years)/float(len(avg_years)))
 
-
 def get_game(file_name, title):
+    title_item_list = []
     for lists in reading_text(file_name):
         if lists[0] == title:
-            return lists
+            for items in lists:
+                try:
+                    items = int(items)
+                    title_item_list.append(items)
+                except ValueError:
+                    title_item_list.append(items)
+            return title_item_list
