@@ -11,22 +11,14 @@ def count_games(file_name):
     return number_of_games
 
 
-print(count_games("game_stat.txt"))
-
-
 def decide(file_name, year):
     result = any(str(year) in lists for lists in reading_text(file_name))
     return result
-
-print(decide("game_stat.txt", 1999))
 
 
 def get_latest(file_name):
     sorted_list = sorted(reading_text(file_name), key=lambda x: x[2], reverse=True)
     return sorted_list[0][0]
-
-
-print(get_latest("game_stat.txt"))
 
 
 def count_by_genre(file_name, genre):
@@ -38,29 +30,50 @@ def count_by_genre(file_name, genre):
     return counter
 
 
-print (count_by_genre("game_stat.txt", "Real-time strategy"))
-
-
 def get_line_number_by_title(file_name, title):
-    import_file = reading_text(file_name)
-    for lists in import_file:
+    for lists in reading_text(file_name):
         if lists[0] == title:
-            return import_file.index(lists)+1
-
-        raise ValueError
-        print("Title not in the list")
-
-
-print(get_line_number_by_title("game_stat.txt", "hehe")
-
+            return (reading_text(file_name).index(lists)+1)
+    raise ValueError
 
 def sort_abc(file_name):
-    pass
+    games = []
+    for lists in reading_text(file_name):
+        games.append(lists[0])
+    iteration = 0
+    while (iteration < len(games)):
+        item = 0
+        while item <= len(games)-2:
+            if (games[item] > games[item+1]):
+                temp = games[item+1]
+                games[item+1] = games[item]
+                games[item] = temp
+                item += 1
+            else:
+                item += 1
+        iteration += 1
+    return games
 
 
 def get_genres(file_name):
-    pass
+    genres = []
+    for lists in reading_text(file_name):
+        if lists[3] in genres:
+            continue
+        else:
+            genres.append(lists[3])
+    return sorted(genres)
 
 
 def when_was_top_sold_fps(file_name):
-    pass
+    top_sold_dict = {}
+    for lists in reading_text(file_name):
+        if lists[3] == "First-person shooter":
+            top_sold_dict.update({float(lists[1]): int(lists[2])})
+        else:
+            continue
+    if not top_sold_dict:
+        raise ValueError
+        return
+    top_sort_dict = sorted(top_sold_dict.items(), key=lambda x: x[0], reverse=True)
+    return top_sort_dict[0][1]
