@@ -1,4 +1,5 @@
 import csv
+from collections import Counter
 
 
 def reading_text(file_name):
@@ -13,8 +14,8 @@ def get_most_played(file_name):
 
 def get_specific_data_from_file(file_name, cast_funct, index):
     new_list = []
-    for lists in reading_text(file_name):
-        new_list.append(cast_funct(lists[index]))
+    for data_list in reading_text(file_name):
+        new_list.append(cast_funct(data_list[index]))
     return new_list
 
 
@@ -34,33 +35,45 @@ def get_date_avg(file_name):
     return round(sum(get_specific_data_from_file(file_name, int, 2))/float(len(get_specific_data_from_file(file_name, int, 2))))
 
 
-def isfloat(x):
+def is_float(item):
     try:
-        a = float(x)
+        float_number = float(item)
     except ValueError:
         return False
     else:
         return True
 
 
-def isint(x):
+def is_int(item):
     try:
-        a = float(x)
-        b = int(a)
+        float_number = float(item)
+        int_number = int(float_number)
     except ValueError:
         return False
     else:
-        return a == b
+        return float_number == int_number
 
 
 def get_game(file_name, title):
     title_item_list = []
-    for lists in reading_text(file_name):
-        if lists[0] == title:
-            for items in lists:
-                if isint(items):
-                    items = int(items)
-                elif isfloat(items):
-                    items = float(items)
-                title_item_list.append(items)
+    for data_list in reading_text(file_name):
+        if data_list[0] == title:
+            for item in data_list:
+                if is_int(item):
+                    item = int(item)
+                elif is_float(item):
+                    item = float(item)
+                title_item_list.append(item)
             return title_item_list
+
+
+def append_to_list(file_name, index):
+    new_list = []
+    for data_list in reading_text(file_name):
+        new_list.append(data_list[index])
+    return new_list
+
+
+def count_grouped_by_genre(file_name):
+    append_to_list(file_name, 3)
+    return dict(Counter(append_to_list(file_name, 3)))
