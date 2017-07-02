@@ -1,5 +1,6 @@
 import csv
 from collections import Counter
+from itertools import *
 
 
 def reading_text(file_name):
